@@ -1,6 +1,7 @@
 require "musterb/version"
 require "musterb/musterbifier"
 require "musterb/binding_extractor"
+require "musterb/hash_extractor"
 require "musterb/evaluator"
 
 module Musterb

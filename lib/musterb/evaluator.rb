@@ -12,6 +12,8 @@ class Musterb::Evaluator
     return if is_falsy? value
 
     case value
+    when Hash
+      switch_context(value) { |v| yield v }
     when Enumerable
       value.each { |e| switch_context(e) { |v| yield v } }
     else
@@ -27,6 +29,8 @@ class Musterb::Evaluator
 
   def is_falsy?(value)
     case value
+    when Hash
+      false
     when Enumerable
       value.empty?
     else
@@ -34,7 +38,17 @@ class Musterb::Evaluator
     end
   end
 
+  def new_context(value)
+    HashExtractor.new(value, @context)
+  end
+
+  def old_context
+    @context.parent
+  end
+
   def switch_context(value)
+    @context = new_context(value)
     yield value
+    @context = old_context
   end
 end
