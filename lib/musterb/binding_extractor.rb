@@ -4,12 +4,8 @@ class Musterb::BindingExtractor
   end
 
   def [](symbol)
-    @binding.eval <<-EOF
-    begin
-      #{symbol}
-    rescue NameError
-      nil
-    end
-EOF
+    @binding.eval symbol
+  rescue NameError
+    nil
   end
 end
