@@ -26,4 +26,8 @@ describe Musterb::Musterbifier do
   it "replaces comments with nothing" do
     Musterb::Musterbifier.new("{{! foo\n bar}}").to_erb.should eq ""
   end
+
+  it "replaces . with current value" do
+    Musterb::Musterbifier.new("{{.}}").to_erb.should eq "<%== musterb.current %>"
+  end
 end

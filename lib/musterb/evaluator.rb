@@ -3,8 +3,11 @@ class Musterb::Evaluator
     @context = context
   end
 
+  def value
+    @context.value
+  end
+
   def [](symbol)
-    return @context.value if symbol == "."    
     final_context = symbol.split(".").inject(@context) do |con, symbol|      
       new_context con[symbol], con
     end

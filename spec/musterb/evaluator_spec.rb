@@ -7,7 +7,7 @@ describe Musterb::Evaluator do
 
   it "pulls out values from ." do
     evaluator = Musterb::Evaluator.new Musterb::ObjectExtractor.new(2, nil)
-    evaluator["."].should eq 2
+    evaluator.value.should eq 2
   end
 
   it "can do nested values" do

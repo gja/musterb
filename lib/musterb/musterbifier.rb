@@ -19,6 +19,8 @@ class Musterb::Musterbifier
         "<%= musterb['#{match[1..-1].strip}'] %>"
       when '!'
         ""
+      when '.'
+        "<%== musterb.current %>"
       else
         "<%== musterb['#{match.strip}'] %>"
       end
