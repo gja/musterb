@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Musterb::VERSION
   gem.authors       = ["Tejas Dinkar"]
   gem.email         = ["tejas@gja.in"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{The ability to compile mustache templates to erubis erb templates so that we can make use of the performance of compiling templates}
+  gem.summary       = %q{Compile Mustache templates to ERB}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
