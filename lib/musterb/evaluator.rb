@@ -5,6 +5,10 @@ class Musterb::Evaluator
     @context = context
   end  
 
+  def current
+    @context.value
+  end
+
   def block_if(value)
     return if is_falsy? value
 
