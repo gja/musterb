@@ -28,4 +28,14 @@ describe Musterb do
     hash = {:foos => [1, 2, 3]}
     Musterb.render("{{#foos}}{{.}}{{/foos}}", hash).should eq "123"
   end
+
+  it "escapes html" do
+    hash = {:foo => "<br>" }
+    Musterb.render("{{foo}}", hash).should eq "&lt;br&gt;"
+  end
+
+  it "skips html evaluation with triple stach" do
+    hash = {:foo => "<br>" }
+    Musterb.render("{{{foo}}}", hash).should eq "<br>"
+  end
 end
