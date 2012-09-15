@@ -8,4 +8,9 @@ describe HashExtractor do
     extractor = HashExtractor.new({:foo => "bar"}, nil)
     extractor["foo"].should eq "bar"
   end
+
+  it "delegates to the parent if there is no match" do
+    extractor = HashExtractor.new({}, HashExtractor.new({:foo => "bar"}, nil))
+    extractor["foo"].should eq "bar"
+  end
 end
