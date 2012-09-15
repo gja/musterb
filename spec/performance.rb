@@ -32,19 +32,21 @@ template = <<-EOF
 {{/products}}
 EOF
 
+# Mix of symbols and strings
 def random_product
   {
-    "id" => rand(10000),
-    "favorite_id" => rand(10000),
-    "quick_view_url" => "http://foo.bar",
-    "name" => "Product name",
-    "url" => "http://foo.url",
-    "thumbnail" => "http://foo.image",
-    "sku" => "sku",
-    "fabrics" => "fabrics",
-    "themes" => "themes",
-    "designer" => "designer",
-    "favorited" => "favorited"
+    :id => rand(10000),
+    :favorite_id => rand(10000),
+    :quick_view_url => "http://foo.bar",
+    :name => "Product name",
+    :url => "http://foo.url",
+    :thumbnail => "http://foo.image",
+    :sku => "sku",
+    :fabrics => "fabrics",
+    :price => "price",
+    :themes => "themes",
+    :designer => "designer",
+    :favorited => "favorited"
   }
 end
 
