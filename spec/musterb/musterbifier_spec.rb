@@ -16,11 +16,11 @@ describe Musterb::Musterbifier do
   end
 
   it "replaces blocks correctly" do
-    Musterb::Musterbifier.new("{{#cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block 'cond' do %>foo<% end %>"
+    Musterb::Musterbifier.new("{{#cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block_if musterb['cond'] do %>foo<% end %>"
   end
 
   it "replaces carrot correctly" do
-    Musterb::Musterbifier.new("{{^cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block_unless 'cond' do %>foo<% end %>"
+    Musterb::Musterbifier.new("{{^cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block_unless musterb['cond'] do %>foo<% end %>"
   end
 
   it "replaces comments with nothing" do
@@ -29,5 +29,9 @@ describe Musterb::Musterbifier do
 
   it "replaces . with current value" do
     Musterb::Musterbifier.new("{{.}}").to_erb.should eq "<%== musterb.current %>"
+  end
+
+  it "replaces foo.bar with a chain" do
+    Musterb::Musterbifier.new("{{foo.bar}}").to_erb.should eq "<%== musterb.chain('foo')['bar'] %>"
   end
 end

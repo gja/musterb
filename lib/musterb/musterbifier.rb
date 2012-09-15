@@ -3,26 +3,35 @@ class Musterb::Musterbifier
     @template = template
   end
 
+  def fetch(tokens)
+    tokens = tokens.strip.split(".")
+    last_token = tokens.pop
+    fetch_command = tokens.inject("musterb") do |str, token|
+      "#{str}.chain('#{token}')"
+    end
+    "#{fetch_command}['#{last_token}']"
+  end
+
   def to_erb
     @template.gsub(/\{\{(\{?[^\}]*\}?)\}\}/) do |match|
       match = $1
       case match[0]
       when '#'
-        "<% musterb.block '#{match[1..-1].strip}' do %>"
+        "<% musterb.block_if #{fetch match[1..-1]} do %>"
       when '^'
-        "<% musterb.block_unless '#{match[1..-1].strip}' do %>"
+        "<% musterb.block_unless #{fetch match[1..-1]} do %>"
       when "/"
         "<% end %>"
       when '{'
-        "<%= musterb['#{match[1..-2].strip}'] %>"
+        "<%= #{fetch match[1..-2]} %>"
       when '&'
-        "<%= musterb['#{match[1..-1].strip}'] %>"
+        "<%= #{fetch match[1..-1]} %>"
       when '!'
         ""
       when '.'
         "<%== musterb.current %>"
       else
-        "<%== musterb['#{match.strip}'] %>"
+        "<%== #{fetch match} %>"
       end
     end
   end
