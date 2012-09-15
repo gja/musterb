@@ -1,6 +1,6 @@
 class Musterb::Evaluator
-  def initialize(_binding)
-    @context = Musterb::BindingExtractor.new _binding
+  def initialize(context)
+    @context = context
   end
 
   def [](symbol)
@@ -39,7 +39,12 @@ class Musterb::Evaluator
   end
 
   def new_context(value)
-    HashExtractor.new(value, @context)
+    case value
+    when Hash
+      HashExtractor.new(value, @context)
+    else
+      ObjectExtractor.new(value, @context)
+    end
   end
 
   def old_context
