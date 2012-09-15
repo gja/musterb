@@ -30,6 +30,10 @@ class Musterb::Musterbifier
         ""
       when '.'
         "<%== musterb.current %>"
+      when '='
+        raise NotImplementedError, 'Not able to change the mustache delimiter just yet'
+      when '>'
+        raise NotImplementedError, 'Not implemented support for partials'
       else
         "<%== #{fetch match} %>"
       end
