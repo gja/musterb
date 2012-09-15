@@ -1,6 +1,8 @@
 class Musterb::Evaluator
   include ExtractValues
 
+  attr_reader :context
+
   def initialize(context)
     @context = context
   end  

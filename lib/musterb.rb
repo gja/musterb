@@ -11,9 +11,10 @@ require "musterb/chain"
 require "erubis"
 
 module Musterb
-  def self.to_erb(template)
-    musterbifier = Musterbifier.new(template)
-    "<% Musterb::Evaluator.new(Musterb::BindingExtractor.new binding).tap do |musterb| %>#{musterbifier.to_erb}<% end %>"
+  def self.to_erb(template, options = {})
+    musterbifier = Musterbifier.new(template, options[:render_partial_template])
+    initial_context = options[:initial_context] || 'Musterb::BindingExtractor.new binding'
+    "<% Musterb::Evaluator.new(#{initial_context}).tap do |musterb| %>#{musterbifier.to_erb}<% end %>"
   end
 
   def self.render(template, values)

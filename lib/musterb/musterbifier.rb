@@ -1,6 +1,7 @@
 class Musterb::Musterbifier
-  def initialize(template)
+  def initialize(template, render_partial_template = nil)
     @template = template
+    @render_partial_template = render_partial_template || method(:partials_not_implemented)
   end
 
   def fetch(tokens)
@@ -33,10 +34,14 @@ class Musterb::Musterbifier
       when '='
         raise NotImplementedError, 'Not able to change the mustache delimiter just yet'
       when '>'
-        raise NotImplementedError, 'Not implemented support for partials'
+        "<%= #{@render_partial_template.call(match[1..-1].strip)} %>"
       else
         "<%== #{fetch match} %>"
       end
     end
+  end
+
+  def partials_not_implemented(partial)
+    "raise NotImplementedError, 'Don't know how to render partial: #{partial}'"
   end
 end
