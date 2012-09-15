@@ -1,7 +1,7 @@
 require 'hashie'
 
-class HashExtractor
-  attr_reader :parent
+class Musterb::HashExtractor
+  attr_reader :parent, :value
 
   def initialize(value, parent)    
     @value = to_string_access(value)

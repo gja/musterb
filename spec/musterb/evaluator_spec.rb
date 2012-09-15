@@ -10,6 +10,16 @@ describe Musterb::Evaluator do
     evaluator["."].should eq 2
   end
 
+  it "can do nested values" do
+    evaluator = Musterb::Evaluator.new Musterb::ObjectExtractor.new(2, nil)
+    evaluator["next.to_s"].should eq "3"
+  end
+
+  it "does not barf when pulling out a value on nil" do
+    evaluator = Musterb::Evaluator.new Musterb::HashExtractor.new({:foo => nil}, nil)
+    evaluator["foo.bar"].should eq nil
+  end
+
   context "block" do
     it "yields to the block if a value is set" do    
       foo = "bar"

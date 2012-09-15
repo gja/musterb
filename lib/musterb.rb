@@ -3,6 +3,7 @@ require "musterb/musterbifier"
 require "musterb/binding_extractor"
 require "musterb/hash_extractor"
 require "musterb/object_extractor"
+require "musterb/null_extractor"
 require "musterb/evaluator"
 
 module Musterb

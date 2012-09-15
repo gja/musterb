@@ -4,7 +4,11 @@ class Musterb::Evaluator
   end
 
   def [](symbol)
-    @context[symbol]
+    return @context.value if symbol == "."    
+    final_context = symbol.split(".").inject(@context) do |con, symbol|      
+      new_context con[symbol], con
+    end
+    final_context.value
   end
 
   def block(symbol)
@@ -38,12 +42,14 @@ class Musterb::Evaluator
     end
   end
 
-  def new_context(value)
+  def new_context(value, old_context = @context)
     case value
     when Hash
-      HashExtractor.new(value, @context)
+      Musterb::HashExtractor.new(value, old_context)
+    when nil
+      Musterb::NullExtractor.new(old_context)
     else
-      ObjectExtractor.new(value, @context)
+      Musterb::ObjectExtractor.new(value, old_context)
     end
   end
 

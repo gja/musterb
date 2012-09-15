@@ -8,9 +8,4 @@ describe Musterb::ObjectExtractor do
     extractor = Musterb::ObjectExtractor.new(2, Musterb::ObjectExtractor.new("string", nil))
     extractor["upcase"].should eq "STRING"
   end
-
-  it "pulls out values as ." do
-    extractor = Musterb::ObjectExtractor.new(2, nil)
-    extractor["."].should eq 2
-  end
 end
