@@ -4,4 +4,56 @@ describe Musterb::Evaluator do
     evaluator = Musterb::Evaluator.new binding
     evaluator["foo"].should eq "bar"
   end
+
+  context "block" do
+    it "yields to the block if a value is set" do    
+      foo = "bar"
+      evaluator = Musterb::Evaluator.new binding
+      expect { |b| evaluator.block("foo", &b) }.to yield_control
+    end
+
+    it "does not yield to the block if the value is unset" do
+      foo = nil
+      evaluator = Musterb::Evaluator.new binding
+      expect { |b| evaluator.block("foo", &b) }.not_to yield_control
+    end
+
+    it "yields to the block for every element in the array" do
+      foo = [1, 2, 3]
+      evaluator = Musterb::Evaluator.new binding
+      expect { |b| evaluator.block("foo", &b) }.to yield_successive_args(1,2,3)
+    end
+
+    it "does not yield to an empty array" do
+      foo = []
+      evaluator = Musterb::Evaluator.new binding
+      expect { |b| evaluator.block("foo", &b) }.not_to yield_control
+    end
+  end
+
+  context "block_unless" do
+    it "does not yield to the block if a value is set" do    
+      foo = "bar"
+      evaluator = Musterb::Evaluator.new binding
+      expect { |b| evaluator.block_unless("foo", &b) }.not_to yield_control
+    end
+
+    it "does not yield to the block if the value is unset" do
+      foo = nil
+      evaluator = Musterb::Evaluator.new binding
+      expect { |b| evaluator.block_unless("foo", &b) }.to yield_control
+    end
+
+    it "yields to the block for every element in the array" do
+      foo = [1, 2, 3]
+      evaluator = Musterb::Evaluator.new binding
+      expect { |b| evaluator.block_unless("foo", &b) }.not_to yield_control
+    end
+
+    it "does not yield to an empty array" do
+      foo = []
+      evaluator = Musterb::Evaluator.new binding
+      expect { |b| evaluator.block_unless("foo", &b) }.to yield_control
+    end
+  end
 end
