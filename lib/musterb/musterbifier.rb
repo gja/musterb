@@ -9,6 +9,8 @@ class Musterb::Musterbifier
       case match[0]
       when '#'
         "<% musterb.block '#{match[1..-1]}' do %>"
+      when '^'
+        "<% musterb.block_unless '#{match[1..-1]}' do %>"
       when "/"
         "<% end %>"
       when '{'

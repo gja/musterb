@@ -14,4 +14,8 @@ describe Musterb::Musterbifier do
   it "replaces blocks correctly" do
     Musterb::Musterbifier.new("{{#cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block 'cond' do %>foo<% end %>"
   end
+
+  it "replaces carrot correctly" do
+    Musterb::Musterbifier.new("{{^cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block_unless 'cond' do %>foo<% end %>"
+  end
 end
