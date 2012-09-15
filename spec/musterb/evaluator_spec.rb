@@ -5,6 +5,11 @@ describe Musterb::Evaluator do
     evaluator["foo"].should eq "bar"
   end
 
+  it "pulls out values from ." do
+    evaluator = Musterb::Evaluator.new Musterb::ObjectExtractor.new(2, nil)
+    evaluator["."].should eq 2
+  end
+
   context "block" do
     it "yields to the block if a value is set" do    
       foo = "bar"
