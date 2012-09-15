@@ -11,11 +11,19 @@ describe Musterb::Musterbifier do
     Musterb::Musterbifier.new("Hello, {{{world}}}!").to_erb.should eq "Hello, <%= musterb['world'] %>!"
   end
 
+  it "does not escape if it starts with &" do
+    Musterb::Musterbifier.new("Hello, {{& world}}!").to_erb.should eq "Hello, <%= musterb['world'] %>!"
+  end
+
   it "replaces blocks correctly" do
     Musterb::Musterbifier.new("{{#cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block 'cond' do %>foo<% end %>"
   end
 
   it "replaces carrot correctly" do
     Musterb::Musterbifier.new("{{^cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block_unless 'cond' do %>foo<% end %>"
+  end
+
+  it "replaces comments with nothing" do
+    Musterb::Musterbifier.new("{{! foo\n bar}}").to_erb.should eq ""
   end
 end
