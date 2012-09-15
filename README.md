@@ -1,6 +1,6 @@
 # Musterb
 
-TODO: Write a gem description
+This is a gem that lets you compile mustache to erb so that rails will do all the nice caching and such that it does for ERB.
 
 ## Installation
 
@@ -18,7 +18,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add this into config/initializers/musterb_handler.rb
+```ruby
+require 'musterb/template_handler'
+
+ActionView::Template.register_template_handler :mustache, Musterb::TemplateHandler
+```
 
 ## Contributing
 
