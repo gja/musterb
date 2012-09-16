@@ -1,7 +1,6 @@
 class Musterb::Musterbifier
-  def initialize(template, render_partial_template = nil)
+  def initialize(template)
     @template = template
-    @render_partial_template = render_partial_template || method(:partials_not_implemented)
   end
 
   def fetch(match)
@@ -43,8 +42,8 @@ class Musterb::Musterbifier
     raise NotImplementedError, 'Not able to change the mustache delimiter just yet'
   end
 
-  def render_partial(tokens)
-    "<%= #{@render_partial_template.call(tokens)} %>"
+  def render_partial(partial)
+    "<%= raise NotImplementedError, 'Don't know how to render partial: #{partial}' %>"
   end
 
   def to_erb
@@ -71,9 +70,5 @@ class Musterb::Musterbifier
         text_with_escaping fetch match        
       end
     end
-  end
-
-  def partials_not_implemented(partial)
-    "raise NotImplementedError, 'Don't know how to render partial: #{partial}'"
   end
 end

@@ -12,7 +12,8 @@ require "erubis"
 
 module Musterb
   def self.to_erb(template, options = {})
-    musterbifier = Musterbifier.new(template, options[:render_partial_template])
+    klass = options[:musterbifier_klass] || Musterbifier
+    musterbifier = klass.new(template)
     initial_context = options[:initial_context] || 'Musterb::BindingExtractor.new binding'
     "<% Musterb::Evaluator.new(#{initial_context}).tap do |musterb| %>#{musterbifier.to_erb}<% end %>"
   end

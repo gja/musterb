@@ -42,9 +42,4 @@ describe Musterb::Musterbifier do
   it "replaces calls for partials with an exception by default" do
     Musterb::Musterbifier.new("{{> foo}}").to_erb.should eq "<%= raise NotImplementedError, 'Don't know how to render partial: foo' %>"
   end
-
-  it "can be injected with an algorithm for creating partials" do
-    render_partial_template = lambda { |p| "render :partial => '#{p}', :current_context => musterb.context" }
-    Musterb::Musterbifier.new("{{> foo}}", render_partial_template).to_erb.should eq "<%= render :partial => 'foo', :current_context => musterb.context %>"
-  end
 end
