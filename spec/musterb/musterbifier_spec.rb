@@ -40,6 +40,6 @@ describe Musterb::Musterbifier do
   end
 
   it "replaces calls for partials with an exception by default" do
-    Musterb::Musterbifier.new("{{> foo}}").to_erb.should eq "<%= raise NotImplementedError, 'Don't know how to render partial: foo' %>"
+    lambda { Musterb::Musterbifier.new("{{> foo}}").to_erb }.should raise_error NotImplementedError
   end
 end

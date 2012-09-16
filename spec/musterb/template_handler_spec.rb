@@ -16,16 +16,12 @@ describe Musterb::TemplateHandler do
   end
 
   it "escapes things by default" do
-    pending do
-      foo = "<br>"
-      evaluate("{{foo}}", binding).should eq "&lt;br&gt;"  
-    end
+    foo = "<br>"
+    evaluate("{{foo}}", binding).should eq "&lt;br&gt;"  
   end
 
-  it "does not escape things in triple staches" do
-    pending do
-      foo = "<br>"
-      evaluate("{{{foo}}}", binding).should eq "<br>"
-    end    
+  it "does not escape things in triple staches" do    
+    foo = "<br>"
+    evaluate("{{{foo}}}", binding).should eq "<br>"
   end
 end

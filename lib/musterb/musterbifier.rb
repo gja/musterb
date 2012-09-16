@@ -43,7 +43,7 @@ class Musterb::Musterbifier
   end
 
   def render_partial(partial)
-    "<%= raise NotImplementedError, 'Don't know how to render partial: #{partial}' %>"
+    raise NotImplementedError, "Override render_partial in Musterbifier to render partials"    
   end
 
   def to_erb

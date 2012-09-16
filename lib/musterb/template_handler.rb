@@ -6,6 +6,14 @@ class Musterb::TemplateHandler < Musterb::Musterbifier
     "<%= render :partial => '#{partial}', :locals => {:initial_context => musterb.context} %>"
   end
 
+  def text_without_escaping(tokens)
+    "<%= #{tokens}.html_safe %>"
+  end
+
+  def text_with_escaping(tokens)
+    "<%= #{tokens} %>"
+  end
+
   def self.compile_mustache(source, options = {})
     erb = Musterb.to_erb(source, options.merge(:musterbifier_klass => self))
     klass = ActionView::Template::Handlers::ERB
