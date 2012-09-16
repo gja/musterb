@@ -15,28 +15,60 @@ class Musterb::Musterbifier
     "#{fetch_command}['#{last_token}']"
   end
 
+  def block_if(tokens)
+    "<% musterb.block_if #{tokens} do %>"
+  end
+
+  def block_unless(tokens)
+    "<% musterb.block_unless #{tokens} do %>"
+  end
+
+  def block_end
+    "<% end %>"
+  end
+
+  def text_without_escaping(tokens)
+    "<%= #{tokens} %>"
+  end
+
+  def text_with_escaping(tokens)
+    "<%== #{tokens} %>"
+  end
+
+  def comment
+    ""
+  end
+
+  def change_token
+    raise NotImplementedError, 'Not able to change the mustache delimiter just yet'
+  end
+
+  def render_partial(tokens)
+    "<%= #{@render_partial_template.call(tokens)} %>"
+  end
+
   def to_erb
     @template.gsub(/\{\{(\{?[^\}]*\}?)\}\}/) do |match|
       match = $1
       case match[0]
       when '#'
-        "<% musterb.block_if #{fetch match[1..-1]} do %>"
+        block_if fetch match[1..-1]
       when '^'
-        "<% musterb.block_unless #{fetch match[1..-1]} do %>"
+        block_unless fetch match[1..-1]        
       when "/"
-        "<% end %>"
+        block_end
       when '{'
-        "<%= #{fetch match[1..-2]} %>"
+        text_without_escaping fetch match[1..-2]        
       when '&'
-        "<%= #{fetch match[1..-1]} %>"
+        text_without_escaping fetch match[1..-1]
       when '!'
-        ""
+        comment
       when '='
-        raise NotImplementedError, 'Not able to change the mustache delimiter just yet'
+        change_token
       when '>'
-        "<%= #{@render_partial_template.call(match[1..-1].strip)} %>"
+        render_partial match[1..-1].strip        
       else
-        "<%== #{fetch match} %>"
+        text_with_escaping fetch match        
       end
     end
   end
