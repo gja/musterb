@@ -1,4 +1,4 @@
-module ExtractValues
+module Musterb::ExtractValues
   def value
     @context.value
   end

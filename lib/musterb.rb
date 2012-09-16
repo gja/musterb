@@ -1,16 +1,19 @@
-require "musterb/version"
-require "musterb/extract_values"
-require "musterb/musterbifier"
-require "musterb/binding_extractor"
-require "musterb/hash_extractor"
-require "musterb/object_extractor"
-require "musterb/null_extractor"
-require "musterb/evaluator"
-require "musterb/chain"
-
 require "erubis"
 
 module Musterb
+  autoload :VERSION,          "musterb/version"
+
+  autoload :ExtractValues,    "musterb/extract_values"
+  autoload :Musterbifier,     "musterb/musterbifier"
+  autoload :BindingExtractor, "musterb/binding_extractor"
+  autoload :HashExtractor,    "musterb/hash_extractor"
+  autoload :ObjectExtractor,  "musterb/object_extractor"
+  autoload :NullExtractor,    "musterb/null_extractor"
+  autoload :Evaluator,        "musterb/evaluator"
+  autoload :Chain,            "musterb/chain"
+
+  autoload :TemplateHandler,  "musterb/template_handler"
+
   def self.to_erb(template, options = {})
     klass = options[:musterbifier_klass] || Musterbifier
     musterbifier = klass.new(template)

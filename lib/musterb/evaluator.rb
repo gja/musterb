@@ -1,5 +1,5 @@
 class Musterb::Evaluator
-  include ExtractValues
+  include Musterb::ExtractValues
 
   attr_reader :context
 
