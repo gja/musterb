@@ -4,8 +4,10 @@ class Musterb::Musterbifier
     @render_partial_template = render_partial_template || method(:partials_not_implemented)
   end
 
-  def fetch(tokens)
-    tokens = tokens.strip.split(".")
+  def fetch(match)
+    match = match.strip
+    return "musterb.current" if match == '.'
+    tokens = match.split(".")
     last_token = tokens.pop
     fetch_command = tokens.inject("musterb") do |str, token|
       "#{str}.chain('#{token}')"
@@ -29,8 +31,6 @@ class Musterb::Musterbifier
         "<%= #{fetch match[1..-1]} %>"
       when '!'
         ""
-      when '.'
-        "<%== musterb.current %>"
       when '='
         raise NotImplementedError, 'Not able to change the mustache delimiter just yet'
       when '>'

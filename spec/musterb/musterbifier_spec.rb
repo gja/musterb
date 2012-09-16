@@ -19,6 +19,10 @@ describe Musterb::Musterbifier do
     Musterb::Musterbifier.new("{{#cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block_if musterb['cond'] do %>foo<% end %>"
   end
 
+  it "can do #." do
+    Musterb::Musterbifier.new("{{#.}}foo{{/.}}").to_erb.should eq "<% musterb.block_if musterb.current do %>foo<% end %>"
+  end
+
   it "replaces carrot correctly" do
     Musterb::Musterbifier.new("{{^cond}}foo{{/cond}}").to_erb.should eq "<% musterb.block_unless musterb['cond'] do %>foo<% end %>"
   end
