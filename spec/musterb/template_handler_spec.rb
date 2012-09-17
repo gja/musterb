@@ -1,8 +1,8 @@
 require 'musterb/template_handler'
 
 describe Musterb::TemplateHandler do
-  def evaluate(template, binding)
-    compiled = "output_buffer = nil; " + Musterb::TemplateHandler::compile_mustache(template)
+  def evaluate(template, binding, options = {})
+    compiled = "output_buffer = nil; " + Musterb::TemplateHandler::compile_mustache(template, options)
     binding.eval compiled
   end
 
@@ -23,5 +23,15 @@ describe Musterb::TemplateHandler do
   it "does not escape things in triple staches" do    
     foo = "<br>"
     evaluate("{{{foo}}}", binding).should eq "<br>"
+  end
+
+  it "can read from instance variables (likely on the controller)" do
+    @foo = "hello"
+    evaluate("{{foo}}", binding).should eq "hello"
+  end
+
+  it "can be bootstrapped from an initial_context" do
+    initial_context = Musterb::ObjectExtractor.new(2, nil)
+    evaluate("{{to_s}}", binding, :start_with_existing_context => true).should eq "2"
   end
 end

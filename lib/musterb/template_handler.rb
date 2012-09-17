@@ -15,14 +15,13 @@ class Musterb::TemplateHandler < Musterb::Musterbifier
   end
 
   def self.compile_mustache(source, options = {})
-    erb = Musterb.to_erb(source, options.merge(:musterbifier_klass => self))
+    initial_context = options[:start_with_existing_context] ? "initial_context" : 'Musterb::InstanceVariableExtractor.new(self, Musterb::BindingExtractor.new(binding))'
+    erb = Musterb.to_erb(source, options.merge(:musterbifier_klass => self, :initial_context => initial_context))
     klass = ActionView::Template::Handlers::ERB
     klass.erb_implementation.new(erb, :trim => (klass.erb_trim_mode == "-")).src
   end
 
   def self.call(template)
-   options = {}
-   options[:initial_context] = "initial_context" if template.locals.include? "initial_context"
-   compile_mustache(template.source, options)
+    compile_mustache(template.source, :start_with_existing_context => template.locals.include?("initial_context"))
   end
 end
