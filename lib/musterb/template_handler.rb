@@ -14,14 +14,14 @@ class Musterb::TemplateHandler < Musterb::Musterbifier
     "<%= #{tokens} %>"
   end
 
-  def self.compile_mustache(source, options = {})
-    initial_context = options[:start_with_existing_context] ? "initial_context" : 'Musterb::InstanceVariableExtractor.new(self, Musterb::BindingExtractor.new(binding))'
-    erb = Musterb.to_erb(source, options.merge(:musterbifier_klass => self, :initial_context => initial_context))
-    klass = ActionView::Template::Handlers::ERB
-    klass.erb_implementation.new(erb, :trim => (klass.erb_trim_mode == "-")).src
+  def self.build_initial_context(locals)
+    "Musterb::RailsLocalsExtractor.new(#{locals.inspect}, binding, Musterb::InstanceVariableExtractor.new(self,  Musterb::BindingExtractor.new(binding)))"
   end
 
   def self.call(template)
-    compile_mustache(template.source, :start_with_existing_context => template.locals.include?("initial_context"))
+    initial_context = template.locals.include?("initial_context") ? "initial_context" : build_initial_context(template.locals.map(&:to_s) - ["initial_context"])
+    erb = Musterb.to_erb(template.source, :musterbifier_klass => self, :initial_context => initial_context)
+    klass = ActionView::Template::Handlers::ERB
+    klass.erb_implementation.new(erb, :trim => (klass.erb_trim_mode == "-")).src
   end
 end

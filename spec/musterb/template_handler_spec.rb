@@ -1,9 +1,14 @@
 require 'musterb/template_handler'
+require 'ostruct'
 
 describe Musterb::TemplateHandler do
-  def evaluate(template, binding, options = {})
-    compiled = "output_buffer = nil; " + Musterb::TemplateHandler::compile_mustache(template, options)
-    binding.eval compiled
+  def compile_template(template, options = {})
+    template = OpenStruct.new({:source => template, :locals => []}.merge(options))
+    "output_buffer = nil; " + Musterb::TemplateHandler::call(template)
+  end
+
+  def evaluate(template, binding, options = {})    
+    binding.eval compile_template(template, options)
   end
 
   it "is wired up correctly" do
@@ -12,7 +17,7 @@ describe Musterb::TemplateHandler do
   end
 
   it "renders partials corrects" do
-    Musterb::TemplateHandler::compile_mustache("{{>foo}}").should include "render :partial => 'foo', :locals => {:initial_context => musterb.context}"
+    compile_template("{{>foo}}").should include "render :partial => 'foo', :locals => {:initial_context => musterb.context}"
   end
 
   it "escapes things by default" do
@@ -32,6 +37,12 @@ describe Musterb::TemplateHandler do
 
   it "can be bootstrapped from an initial_context" do
     initial_context = Musterb::ObjectExtractor.new(2, nil)
-    evaluate("{{to_s}}", binding, :start_with_existing_context => true).should eq "2"
+    evaluate("{{to_s}}", binding, :locals => ["initial_context"]).should eq "2"
+  end
+
+  it "favors locals over instance variables if passed into locals" do
+    @foo = "hello"
+    foo = "bye"
+    evaluate("{{foo}}", binding, :locals => ["foo"]).should eq "bye"
   end
 end

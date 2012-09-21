@@ -13,6 +13,7 @@ module Musterb
   autoload :Evaluator,                 "musterb/evaluator"
   autoload :Chain,                     "musterb/chain"
 
+  autoload :RailsLocalsExtractor,      "musterb/rails_locals_extractor"
   autoload :TemplateHandler,           "musterb/template_handler"
 
   def self.to_erb(template, options = {})
