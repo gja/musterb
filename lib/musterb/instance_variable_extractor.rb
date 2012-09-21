@@ -7,7 +7,6 @@ class Musterb::InstanceVariableExtractor
   end
 
   def [](symbol)
-    puts "looking for #{symbol}"
     if value.instance_variable_defined?("@#{symbol}")
       value.instance_variable_get("@#{symbol}")
     else
