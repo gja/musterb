@@ -1,11 +1,14 @@
 class Musterb::BindingExtractor
-  def initialize(_binding)
+  attr_reader :value, :parent
+
+  def initialize(_binding, parent)
     @binding = _binding
+    @parent = parent
   end
 
   def [](symbol)
     @binding.eval symbol
   rescue NameError
-    nil
+    parent[symbol]
   end
 end

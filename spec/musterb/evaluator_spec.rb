@@ -1,7 +1,7 @@
 describe Musterb::Evaluator do
   it "can pull local variables out from the binding" do
     foo = "bar"
-    evaluator = Musterb::Evaluator.new Musterb::BindingExtractor.new(binding)
+    evaluator = Musterb::Evaluator.new Musterb::BindingExtractor.new(binding, nil)
     evaluator["foo"].should eq "bar"
   end
 
@@ -72,7 +72,7 @@ describe Musterb::Evaluator do
   context "switching context" do
     it "switches inside a hash" do
       hash = { "foo" => "bar"}    
-      evaluator = Musterb::Evaluator.new Musterb::BindingExtractor.new(binding)
+      evaluator = Musterb::Evaluator.new Musterb::BindingExtractor.new(binding, nil)
       evaluator.block_if hash do
         evaluator['foo'].should eq 'bar'
       end
@@ -80,7 +80,7 @@ describe Musterb::Evaluator do
 
     it "resets the context later" do
       hash = { "foo" => "bar"}
-      evaluator = Musterb::Evaluator.new Musterb::BindingExtractor.new(binding)
+      evaluator = Musterb::Evaluator.new Musterb::BindingExtractor.new(binding, nil)
       evaluator.block_if(hash) {}
       evaluator["hash"].should eq hash
     end
@@ -88,7 +88,7 @@ describe Musterb::Evaluator do
     it "cascades the context to the parent" do
       foo = "bar"
       hash = { }
-      evaluator = Musterb::Evaluator.new Musterb::BindingExtractor.new(binding)
+      evaluator = Musterb::Evaluator.new Musterb::BindingExtractor.new(binding, nil)
       evaluator.block_if hash do
         evaluator['foo'].should eq 'bar'
       end

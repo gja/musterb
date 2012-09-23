@@ -13,7 +13,7 @@ describe Musterb::TemplateHandler do
 
   it "is wired up correctly" do
     foo = "hi"
-    evaluate("{{foo}}", binding).should eq "hi"
+    evaluate("{{foo}}", binding, :locals => ["foo"]).should eq "hi"
   end
 
   it "renders partials corrects" do
@@ -22,12 +22,12 @@ describe Musterb::TemplateHandler do
 
   it "escapes things by default" do
     foo = "<br>"
-    evaluate("{{foo}}", binding).should eq "&lt;br&gt;"  
+    evaluate("{{foo}}", binding, :locals => ["foo"]).should eq "&lt;br&gt;"
   end
 
   it "does not escape things in triple staches" do    
     foo = "<br>"
-    evaluate("{{{foo}}}", binding).should eq "<br>"
+    evaluate("{{{foo}}}", binding, :locals => ["foo"]).should eq "<br>"
   end
 
   it "can read from instance variables (likely on the controller)" do

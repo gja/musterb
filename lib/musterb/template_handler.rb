@@ -15,7 +15,7 @@ class Musterb::TemplateHandler < Musterb::Musterbifier
   end
 
   def self.build_initial_context(locals)
-    "Musterb::RailsLocalsExtractor.new(#{locals.inspect}, binding, Musterb::InstanceVariableExtractor.new(self,  Musterb::BindingExtractor.new(binding)))"
+    "Musterb::RailsLocalsExtractor.new(#{locals.inspect}, binding, Musterb::InstanceVariableExtractor.new(self, Musterb::NullExtractor.new))"
   end
 
   def self.call(template)

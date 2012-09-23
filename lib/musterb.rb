@@ -19,7 +19,7 @@ module Musterb
   def self.to_erb(template, options = {})
     klass = options[:musterbifier_klass] || Musterbifier
     musterbifier = klass.new(template)
-    initial_context = options[:initial_context] || 'Musterb::BindingExtractor.new binding'
+    initial_context = options[:initial_context] || 'Musterb::BindingExtractor.new(binding, Musterb::NullExtractor.new)'
     "<% Musterb::Evaluator.new(#{initial_context}).tap do |musterb| %>#{musterbifier.to_erb}<% end %>"
   end
 
