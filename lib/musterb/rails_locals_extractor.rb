@@ -1,4 +1,4 @@
-class Musterb::RailsLocalsExtractor
+class Musterb::RailsLocalsExtractor < Musterb::Extractor
   attr_reader :parent, :value
 
   def initialize(locals, binding, parent)

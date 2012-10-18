@@ -1,4 +1,4 @@
-class Musterb::InstanceVariableExtractor
+class Musterb::InstanceVariableExtractor < Musterb::Extractor
   attr_reader :parent, :value
 
   def initialize(value, parent)

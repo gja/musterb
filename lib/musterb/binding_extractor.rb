@@ -1,4 +1,4 @@
-class Musterb::BindingExtractor
+class Musterb::BindingExtractor < Musterb::Extractor
   attr_reader :value, :parent
 
   def initialize(_binding, parent)

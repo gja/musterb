@@ -11,9 +11,10 @@ module Musterb::ExtractValues
     Musterb::Chain.new self[symbol]
   end
 
-  private
-  def new_context(value, old_context = @context)
+  def self.new_context(value, old_context = @context)
     case value
+    when Musterb::Extractor
+      value
     when Hash
       Musterb::HashExtractor.new(value, old_context)
     when nil
@@ -21,5 +22,10 @@ module Musterb::ExtractValues
     else
       Musterb::ObjectExtractor.new(value, old_context)
     end
+  end
+
+  private
+  def new_context(value, old_context = @context)
+    Musterb::ExtractValues.new_context(value, old_context)
   end
 end
