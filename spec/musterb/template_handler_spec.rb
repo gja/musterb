@@ -7,7 +7,7 @@ describe Musterb::TemplateHandler do
     "output_buffer = nil; " + Musterb::TemplateHandler::call(template)
   end
 
-  def evaluate(template, binding, options = {})    
+  def evaluate(template, binding, options = {})
     binding.eval compile_template(template, options)
   end
 
@@ -25,7 +25,7 @@ describe Musterb::TemplateHandler do
     evaluate("{{foo}}", binding, :locals => ["foo"]).should eq "&lt;br&gt;"
   end
 
-  it "does not escape things in triple staches" do    
+  it "does not escape things in triple staches" do
     foo = "<br>"
     evaluate("{{{foo}}}", binding, :locals => ["foo"]).should eq "<br>"
   end
@@ -44,5 +44,10 @@ describe Musterb::TemplateHandler do
     @foo = "hello"
     foo = "bye"
     evaluate("{{foo}}", binding, :locals => ["foo"]).should eq "bye"
+  end
+
+  it "can set the initial context to a hash" do
+    mustache = 2
+    evaluate("{{to_s}}", binding, :locals => ["mustache"]).should eq "2"
   end
 end
