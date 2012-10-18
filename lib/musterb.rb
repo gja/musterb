@@ -5,7 +5,6 @@ module Musterb
 
   autoload :ExtractValues,             "musterb/extract_values"
   autoload :Musterbifier,              "musterb/musterbifier"
-  autoload :Extractor,                 "musterb/extractor"
   autoload :BindingExtractor,          "musterb/binding_extractor"
   autoload :HashExtractor,             "musterb/hash_extractor"
   autoload :ObjectExtractor,           "musterb/object_extractor"

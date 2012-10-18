@@ -1,4 +1,4 @@
-class Musterb::NullExtractor < Musterb::Extractor
+class Musterb::NullExtractor
   attr_reader :value, :parent
 
   def initialize(parent = nil)

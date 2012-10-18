@@ -1,4 +1,4 @@
-class Musterb::ObjectExtractor < Musterb::Extractor
+class Musterb::ObjectExtractor
   attr_reader :parent, :value
 
   def initialize(value, parent)
@@ -6,7 +6,7 @@ class Musterb::ObjectExtractor < Musterb::Extractor
     @parent = parent
   end
 
-  def [](symbol)
+  def [](symbol)    
     if @value.respond_to? symbol
       @value.send(symbol)
     else
