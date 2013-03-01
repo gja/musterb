@@ -25,10 +25,9 @@ require 'musterb/template_handler'
 ActionView::Template.register_template_handler :mustache, Musterb::TemplateHandler
 ```
 
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Here is how to include it as a partial. In all three cases, {{foo}} will evaluate to 'bar':
+```ruby
+render :partial => "something", :locals => {:foo => 'bar'} # Read from local variables
+render :partial => "something", :locals => {:mustache => {:foo => "bar"}} # Read from a Hash
+render :partial => "something", :locals => {:mustache => OpenStruct.new(:foo => "bar")} # Read from an object
+```
